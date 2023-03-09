@@ -1,18 +1,26 @@
 import express from 'express';
 import path from 'path';
-import { getAllNotes } from './notes';
+import { getAllNotes, createNote } from './notes';
+import bodyParser from 'body-parser';
+
 
 const notesRouter = express.Router();
 
-notesRouter.get('/', (_req, res) => {
-  res.send(getAllNotes());
+notesRouter.get('/', async (_req, res) => {
+  res.send(await getAllNotes());
 });
+
+notesRouter.post('/create', async (req, res) => {
+  const { owner, title, body } = await req.body;
+  res.send(await createNote(owner, title, body));
+})
 
 const apiRouter = express.Router();
 
 apiRouter.use('/notes', notesRouter);
 
 const app = express();
+app.use(bodyParser.json());
 
 app.use('/api', apiRouter);
 
