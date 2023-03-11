@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { getAllNotes, createNote } from './notes';
+import { getAllNotes, createNote, deleteNote } from './notes';
 import bodyParser from 'body-parser';
 
 
@@ -14,6 +14,13 @@ notesRouter.post('/create', async (req, res) => {
   const { owner, title, body } = await req.body;
   res.send(await createNote(owner, title, body));
 })
+
+notesRouter.delete('/', async (req, res) => {
+  const body = await req.body;
+  console.log(body);
+})
+
+//notesRouter.patch('/', )
 
 const apiRouter = express.Router();
 

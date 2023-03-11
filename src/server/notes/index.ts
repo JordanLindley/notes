@@ -38,3 +38,14 @@ export async function createNote(owner:string, title?:string, body?:string): Pro
 
   return res.rows[0];
 }
+
+export async function deleteNote(id:string): Promise<Note[]> {
+  const client = await getClient();
+
+  const res = await client.query<Note>(`DELETE FROM notes WHERE id = ${id};`);
+  await client.end();
+
+  return res.rows;
+}
+
+//export async function updateNote(): Promise<Note> {}
