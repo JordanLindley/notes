@@ -42,7 +42,7 @@ export async function createNote(owner:string, title?:string, body?:string): Pro
 export async function deleteNote(id:string): Promise<void> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`DELETE FROM notes WHERE id = '${id}';`);
+  const res = await client.query<Note>(`DELETE FROM notes WHERE id = $1;`, [id]);
   await client.end();
 
   console.log('Gone!');
@@ -60,7 +60,7 @@ export async function updateNote(noteID:string, title?:string, body?:string): Pr
 export async function readNote(id:string): Promise<Note> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`SELECT * FROM notes WHERE id = '${id}';`);
+  const res = await client.query<Note>(`SELECT * FROM notes WHERE id = $1;`, [id]);
   await client.end();
 
   return res.rows[0];
