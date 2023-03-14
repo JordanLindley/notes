@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { getAllNotes, createNote, deleteNote } from './notes';
+import { getAllNotes, createNote, deleteNote, updateNote } from './notes';
 import bodyParser from 'body-parser';
 
 
@@ -10,17 +10,22 @@ notesRouter.get('/', async (_req, res) => {
   res.send(await getAllNotes());
 });
 
-notesRouter.post('/create', async (req, res) => {
+//notesRouter.read('/:id', async (req, res) => {})
+
+notesRouter.post('/', async (req, res) => {
   const { owner, title, body } = await req.body;
   res.send(await createNote(owner, title, body));
 })
 
-notesRouter.delete('/', async (req, res) => {
-  const body = await req.body;
-  console.log(body);
+notesRouter.delete('/:id', async (req, res) => {
+  const id = await req.params.id;
+  res.send(await deleteNote(id));
 })
 
-//notesRouter.patch('/', )
+notesRouter.patch('/',async (req, res) => {
+  const { noteID, title, body } = await req.body;
+  res.send(await updateNote(noteID, title, body));
+})
 
 const apiRouter = express.Router();
 

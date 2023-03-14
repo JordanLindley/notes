@@ -39,13 +39,20 @@ export async function createNote(owner:string, title?:string, body?:string): Pro
   return res.rows[0];
 }
 
-export async function deleteNote(id:string): Promise<Note[]> {
+export async function deleteNote(id:string): Promise<void> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`DELETE FROM notes WHERE id = ${id};`);
+  const res = await client.query<Note>(`DELETE FROM notes WHERE id = '${id}';`);
   await client.end();
 
-  return res.rows;
+  console.log('Gone!');
 }
 
-//export async function updateNote(): Promise<Note> {}
+export async function updateNote(noteID:string, title?:string, body?:string): Promise<Note> {
+  const client = await getClient();
+
+  const res = await client.query<Note>(`UPDATE notes SET title = '${title}', BODY = '${body}' WHERE id = '${noteID}';`);
+  await client.end();
+
+  return res.rows[0];
+}
