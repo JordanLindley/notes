@@ -51,7 +51,7 @@ export async function deleteNote(id:string): Promise<void> {
 export async function updateNote(noteID:string, title?:string, body?:string): Promise<Note> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`UPDATE notes SET title = '${title}', BODY = '${body}' WHERE id = '${noteID}';`);
+  const res = await client.query<Note>(`UPDATE notes SET title = $1, BODY = $2 WHERE id = $3;`, [title, body, noteID]);
   await client.end();
 
   return res.rows[0];

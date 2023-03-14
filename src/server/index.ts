@@ -22,9 +22,13 @@ notesRouter.delete('/:id', async (req, res) => {
   res.send(await deleteNote(id));
 })
 
-notesRouter.patch('/',async (req, res) => {
-  const { noteID, title, body } = await req.body;
-  res.send(await updateNote(noteID, title, body));
+notesRouter.patch('/:id',async (req, res) => {
+  const { title, body } = await req.body;
+  const id = await req.params.id;
+  
+  console.log({ title, body, id });
+
+  res.send(await updateNote(id, title, body));
 })
 
 const apiRouter = express.Router();
