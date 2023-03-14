@@ -56,3 +56,12 @@ export async function updateNote(noteID:string, title?:string, body?:string): Pr
 
   return res.rows[0];
 }
+
+export async function readNote(id:string): Promise<Note> {
+  const client = await getClient();
+
+  const res = await client.query<Note>(`SELECT * FROM notes WHERE id = '${id}';`);
+  await client.end();
+
+  return res.rows[0];
+}
