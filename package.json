@@ -13,23 +13,23 @@
     "server:dev": "nodemon -P tsconfig.server.json src/server/index.ts"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "pg": "^8.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "express": "^4.18.2",
-    "pg": "^8.10.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^18.14.6",
+    "@types/pg": "^8.6.6",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.21",
-    "vite": "^4.1.0",
-    "@types/pg": "^8.6.6",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vite": "^4.1.0"
   }
 }
