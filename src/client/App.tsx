@@ -1,18 +1,17 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import NoteBook from './components/NoteBook';
 import Note from './components/Note';
-import Button from './components/Button';
 
-type Note = {
+export type Note = {
   id: string;
-  created_at: Date;
-  owner: string;
   title: string;
   body: string;
 };
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [selectedNote, setSelectedNote] = useState<null | Note>(null);
   useEffect(() => {
     fetch('/api/notes')
       .then(async (res) => res.json())
@@ -21,12 +20,14 @@ function App() {
       });
   }, []);
 
+  function selectNote(note: Note) {
+    setSelectedNote(note); //refactor to URL w/ note ID?
+  }
+
   return (
     <div className="App">
-      <Button text="hi" color="purple" />
-      {notes.map(({ id, title, body }) => (
-        <Note key={id} title={title} body={body} />
-      ))}
+      <NoteBook notes={notes} onSelectNote={selectNote} />
+      {selectedNote ? <Note note={selectedNote} /> : null}
     </div>
   );
 }
