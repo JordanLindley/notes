@@ -1,0 +1,14 @@
+.note-box {
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all ease 0.5s;
+  text-align: left;
+  width: 15vw;
+}
+
+.note-box:hover {
+  background-color: darkorange;
+}
