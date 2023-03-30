@@ -1,4 +1,4 @@
-# notes
+# notes: a note-taking web app
 
 ## Development Setup
 
