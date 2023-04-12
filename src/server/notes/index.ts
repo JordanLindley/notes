@@ -26,7 +26,7 @@ export async function getAllNotes(): Promise<Note[]> {
 }
 
 export async function createNote(
-  owner: string,
+  owner?: string,
   title?: string,
   body?: string
 ): Promise<Note> {
