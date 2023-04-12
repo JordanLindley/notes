@@ -37,15 +37,16 @@ function App() {
   }
 
   return (
-    //s
     <div className="App">
-      <NoteBook notes={notes} onSelectNote={selectNote} />
-      {selectedNote ? (
-        <div className="display-container">
-          <Note note={selectedNote} />
-          <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
-        </div>
-      ) : null}
+      <div className="ui">
+        <NoteBook notes={notes} onSelectNote={selectNote} />
+        {selectedNote ? (
+          <div className="display-container">
+            <Note note={selectedNote} />
+            <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

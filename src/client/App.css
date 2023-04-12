@@ -5,14 +5,19 @@
   text-align: center;
 }
 
-body {
+/* body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
+} */
 
 .display-container {
   border: solid white 0.5px;
   height: 95vh;
   border-radius: 10px;
+}
+
+.ui {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
 }

@@ -11,10 +11,6 @@ export default function Note(props: {
         </div>
         <div className="note-body">
           <main>{props.note.body}</main>
-          <div className="buttons-box">
-            {/* edit component
-            delete component */}
-          </div>
         </div>
       </div>
     </div>

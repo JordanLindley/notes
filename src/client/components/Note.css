@@ -2,9 +2,9 @@
   border: 1px solid white;
   border-radius: 10px;
   margin: 10px;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
-  transition: all ease 0.8s;
+  transition: all ease 0.4s;
   text-align: left;
   width: 15vw;
 }
@@ -14,11 +14,18 @@
 }
 
 .note-box:active {
-  scale: 0.98;
+  scale: 0.88;
 }
 
 .note-display {
   text-align: left;
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.title-preview {
+  font-size: 40px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
