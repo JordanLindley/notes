@@ -36,9 +36,17 @@ function App() {
       });
   }
 
+  function createNote(note: Note) {
+    fetch(`api/notes`, { method: 'POST' }).then(() => {
+      setSelectedNote(note);
+      // setNotes(notes.push(note)) ??? getting error that a number cannot be a param.
+    });
+  }
+
   return (
     <div className="App">
-      <div className="ui">
+      <div id="ui">
+        {/* <Create> */}
         <NoteBook notes={notes} onSelectNote={selectNote} />
         {selectedNote ? (
           <div className="display-container">
