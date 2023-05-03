@@ -1,10 +1,10 @@
 import NotePreview from './NotePreview';
 import type { Note } from '../App';
 
-export default function Create() {
-  function handleClick() {
-    // props.onCreateNote();  ??? not sure what to use as argument here.
-  }
+export default function Create(props: {
+  onCreateNote: (title: string, body: string, id: string) => void;
+}) {
+  function handleClick() {}
 
   return (
     <button className="create" onClick={handleClick}>
