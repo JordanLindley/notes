@@ -1,10 +1,7 @@
 import NotePreview from './NotePreview';
 import type { Note } from '../App';
 
-export default function Create(props: {
-  notes: Note[]; // ???
-  onCreateNote: (note: Note) => void;
-}) {
+export default function Create() {
   function handleClick() {
     // props.onCreateNote();  ??? not sure what to use as argument here.
   }

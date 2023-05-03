@@ -13,6 +13,7 @@ export type Note = {
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNote, setSelectedNote] = useState<null | Note>(null);
+
   useEffect(() => {
     fetch('/api/notes')
       .then(async (res) => res.json())
@@ -36,9 +37,8 @@ function App() {
       });
   }
 
-  function createNote(note: Note) {
+  function createNote() {
     fetch(`api/notes`, { method: 'POST' }).then(() => {
-      setSelectedNote(note);
       // setNotes(notes.push(note)) ??? getting error that a number cannot be a param.
     });
   }
