@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import NoteBook from './components/NoteBook';
 import Note from './components/Note';
 import Delete from './components/Delete';
+import { json } from 'body-parser';
+import { stringify } from 'querystring';
+import { create } from 'domain';
 
 export type Note = {
   id: string;
@@ -37,20 +40,52 @@ function App() {
       });
   }
 
+  function saveNote(note: Note) {
+    fetch(`/api/notes/${note.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(note),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(async (res) => res.json())
+      .then((savedNote) => {
+        setNotes(
+          notes.map((note) => {
+            if (note.id == savedNote.id) {
+              return savedNote;
+            } else return note;
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function createNote() {
-    fetch(`api/notes`, { method: 'POST' }).then(() => {
-      // setNotes(notes.push(note)) ??? getting error that a number cannot be a param.
-    });
+    fetch(`api/notes`, {
+      method: 'POST',
+      body: JSON.stringify({ title: '', body: '' }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(async (res) => res.json())
+      .then((createdNote) => {
+        setSelectedNote(createdNote);
+        setNotes([createdNote, ...notes]);
+      });
   }
 
   return (
     <div className="App">
       <div id="ui">
         {/* <Create> */}
-        <NoteBook notes={notes} onSelectNote={selectNote} />
+        <NoteBook
+          notes={notes}
+          onSelectNote={selectNote}
+          onCreateNote={createNote}
+        />
         {selectedNote ? (
           <div className="display-container">
-            <Note note={selectedNote} />
+            <Note note={selectedNote} onSaveNote={saveNote} />
             <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
           </div>
         ) : null}

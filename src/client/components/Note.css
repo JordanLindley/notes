@@ -43,12 +43,22 @@
   border-radius: 10px;
 }
 
-.delete {
+.delete .save .new-note {
   margin-top: 20rem;
   text-align: center;
   max-width: 2rem;
   align-items: center;
-  transition: color 0.25s;
+  transition: all 0.4s ease;
+}
+
+.new-note:hover {
+  color: green;
+  border: solid green 1px;
+}
+
+.save:hover {
+  color: blue;
+  border: solid blue 1px;
 }
 
 .delete:hover {
