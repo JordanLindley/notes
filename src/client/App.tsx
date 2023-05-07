@@ -1,4 +1,5 @@
 import './App.css';
+import './index.css';
 import { useEffect, useState } from 'react';
 import NoteBook from './components/NoteBook';
 import Note from './components/Note';
