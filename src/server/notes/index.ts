@@ -19,7 +19,9 @@ async function getClient() {
 export async function getAllNotes(): Promise<Note[]> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`SELECT * FROM notes`);
+  const res = await client.query<Note>(
+    `SELECT * FROM notes ORDER BY created_at DESC;`
+  );
   await client.end();
 
   return res.rows;
@@ -33,7 +35,7 @@ export async function createNote(
   const client = await getClient();
 
   const res = await client.query<Note>(
-    `INSERT INTO notes (owner, title, body) VALUES ($1, $2, $3);`,
+    `INSERT INTO notes (owner, title, body) VALUES ($1, $2, $3) RETURNING id, title, body;`,
     [owner, title, body]
   );
   await client.end();
@@ -59,8 +61,10 @@ export async function updateNote(
 ): Promise<Note> {
   const client = await getClient();
 
+  console.log(noteID, title, body);
+
   const res = await client.query<Note>(
-    `UPDATE notes SET title = $1, BODY = $2 WHERE id = $3;`,
+    `UPDATE notes SET title = $1, BODY = $2 WHERE id = $3 RETURNING id, title, body;`,
     [title, body, noteID]
   );
   await client.end();
