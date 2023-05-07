@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import NoteBook from './components/NoteBook';
 import Note from './components/Note';
 import Delete from './components/Delete';
-import { json } from 'body-parser';
-import { stringify } from 'querystring';
-import { create } from 'domain';
 
 export type Note = {
   id: string;
@@ -77,7 +74,6 @@ function App() {
   return (
     <div className="App">
       <div id="ui">
-        {/* <Create> */}
         <NoteBook
           notes={notes}
           onSelectNote={selectNote}
