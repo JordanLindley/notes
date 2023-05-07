@@ -6,7 +6,7 @@ export default function Delete(props: {
 }) {
   function handleClick() {
     // alert user for confirmation when clicked
-    if (window.confirm('Delete note?')) {
+    if (window.confirm('Permanently delete note?')) {
       props.onDeleteNote(props.noteId);
     }
   }
