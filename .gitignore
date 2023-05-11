@@ -9,6 +9,7 @@ lerna-debug.log*
 
 .env
 node_modules
+golang-migrate
 dist
 dist-ssr
 *.local
