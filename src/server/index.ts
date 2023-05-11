@@ -25,8 +25,8 @@ notesRouter.get('/:id', async (req, res) => {
 });
 
 notesRouter.post('/', async (req, res) => {
-  const { owner, title, body } = await req.body;
-  res.send(await createNote(owner, title, body));
+  const { title, body } = await req.body;
+  res.send(await createNote(title, body));
 });
 
 notesRouter.delete('/:id', async (req, res) => {

@@ -3,7 +3,6 @@ import { Client } from 'pg';
 export type Note = {
   id: string;
   created_at: Date;
-  owner: string;
   title: string;
   body: string;
 };
@@ -27,16 +26,12 @@ export async function getAllNotes(): Promise<Note[]> {
   return res.rows;
 }
 
-export async function createNote(
-  owner?: string,
-  title?: string,
-  body?: string
-): Promise<Note> {
+export async function createNote(title?: string, body?: string): Promise<Note> {
   const client = await getClient();
 
   const res = await client.query<Note>(
-    `INSERT INTO notes (owner, title, body) VALUES ($1, $2, $3) RETURNING id, title, body;`,
-    [owner, title, body]
+    `INSERT INTO notes (title, body) VALUES ($1, $2) RETURNING id, title, body;`,
+    [title, body]
   );
   await client.end();
 
