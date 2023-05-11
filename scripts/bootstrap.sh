@@ -10,3 +10,6 @@ npm install
 
 # Create the "notes" db (will fail if it already exists but that's okay).
 createdb notes
+
+# Make sure the golang-migrate binary is executable
+chmod +x db/golang-migrate/migrate
