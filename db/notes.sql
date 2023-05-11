@@ -1,7 +1,0 @@
-CREATE TABLE notes (
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
-  owner TEXT REFERENCES users (id) ON DELETE CASCADE,
-  title TEXT,
-  body TEXT
-);
