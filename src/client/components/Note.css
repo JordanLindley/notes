@@ -1,5 +1,5 @@
 .note-box {
-  border: 1px solid white;
+  border: 1px solid #282a3a;
   border-radius: 10px;
   margin: 10px;
   padding: 0.5rem;
@@ -12,10 +12,11 @@
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  background-color: #282a3a;
 }
 
 .note-box:hover {
-  background-color: darkorange;
+  background-color: #2d4263;
 }
 
 .note-box:active {
@@ -24,7 +25,7 @@
 
 .note-display {
   text-align: left;
-  padding-left: 2rem;
+  padding-left: 1rem;
   padding-right: 2rem;
 }
 
@@ -36,32 +37,91 @@
 }
 
 .display-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 3fr 1fr;
   border: solid white 0.5px;
   height: 95vh;
   border-radius: 10px;
 }
 
-.delete .save .new-note {
-  margin-top: 20rem;
+.note-container {
+  grid-row: 1 / 2;
+  padding-bottom: 0;
+}
+
+.note-title,
+.note-body {
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.note-title {
+  grid-row: 1 / 2;
+}
+
+.note-body {
+  grid-row: 2 / 3;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: none;
+  background-color: #191919;
+  outline: none;
+}
+
+input {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  height: 3rem;
+  font-size: 2rem;
+  border-bottom: 2px solid #282a3a;
+}
+
+textarea {
+  height: 50vh;
+}
+
+button {
+  vertical-align: middle;
   text-align: center;
-  max-width: 2rem;
+  align-items: center;
+  width: 3rem;
+}
+
+.create {
+  transform: translateX(240%);
+}
+
+.create:hover {
+  color: #ecdbba;
+  border: solid #ecdbba 1px;
+}
+
+.delete-container {
+  grid-row: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete {
+  text-align: center;
   align-items: center;
   transition: all 0.4s ease;
-}
-
-.new-note:hover {
-  color: green;
-  border: solid green 1px;
-}
-
-.save:hover {
-  color: blue;
-  border: solid blue 1px;
+  padding: 0.5rem;
 }
 
 .delete:hover {
-  color: red;
-  border: solid red 1px;
+  color: #c84b31;
+  border: solid #c84b31 1px;
 }
