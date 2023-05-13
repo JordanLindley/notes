@@ -25,7 +25,7 @@
 
 .note-display {
   text-align: left;
-  padding-left: 2rem;
+  padding-left: 1rem;
   padding-right: 2rem;
 }
 
@@ -38,7 +38,7 @@
 
 .display-container {
   display: grid;
-  grid-template-rows: 5fr 1fr;
+  grid-template-rows: 3fr 1fr;
   border: solid white 0.5px;
   height: 95vh;
   border-radius: 10px;
@@ -46,6 +46,7 @@
 
 .note-container {
   grid-row: 1 / 2;
+  padding-bottom: 0;
 }
 
 .delete {
@@ -76,6 +77,28 @@
   grid-row: 2 / 3;
 }
 
+input,
+textarea {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: none;
+  background-color: #191919;
+  outline: none;
+}
+
+input {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  height: 3rem;
+  font-size: 2rem;
+  border-bottom: 2px solid #282a3a;
+}
+
+textarea {
+  height: 50vh;
+}
+
 button {
   vertical-align: middle;
   text-align: center;
@@ -84,7 +107,7 @@ button {
 }
 
 .create {
-  transform: translateX(260%);
+  transform: translateX(240%);
 }
 
 .create:hover {
