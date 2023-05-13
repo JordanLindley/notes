@@ -49,14 +49,6 @@
   padding-bottom: 0;
 }
 
-.delete {
-  /* margin-top: 20rem; */
-  text-align: center;
-  align-items: center;
-  transition: all 0.4s ease;
-  grid-row: 2 / 3;
-}
-
 .note-title,
 .note-body {
   padding: 0;
@@ -113,6 +105,20 @@ button {
 .create:hover {
   color: #ecdbba;
   border: solid #ecdbba 1px;
+}
+
+.delete-container {
+  grid-row: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete {
+  text-align: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  padding: 0.5rem;
 }
 
 .delete:hover {
