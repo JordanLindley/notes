@@ -23,11 +23,16 @@ if [ ! -f ./db/golang-migrate/migrate ]; then
   VERSION="v4.15.2"
   OS=$(uname -s | awk '{ print tolower($0) }')
   ARCH=$(uname -m)
-  if [ $OS = "linux" ] && [ $ARCH = "x86_64" ]; then
-    ARCH="amd64"
-  fi
 
-  curl -L https://github.com/golang-migrate/migrate/releases/download/$VERSION/migrate.$OS-$ARCH.tar.gz | tar xvz
+  if [ $OS = "darwin" ]; then
+    brew install golang-migrate
+  else
+    if [ $OS = "linux" ] && [ $ARCH = "x86_64" ]; then
+      ARCH="amd64"
+    fi
+    curl -L https://github.com/golang-migrate/migrate/releases/download/$VERSION/migrate.$OS-$ARCH.tar.gz | tar xvz
+  fi
+  
   chmod +x ./migrate
   cd -
 fi
