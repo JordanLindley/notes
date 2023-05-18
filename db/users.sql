@@ -1,5 +1,7 @@
+-- When we're ready to work on users we can move this into a migration file.
 CREATE TABLE users(
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
+  id text PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text UNIQUE NOT NULL,
+  created_at timestamp without time zone NOT NULL DEFAULT NOW()
 );
+
