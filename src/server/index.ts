@@ -11,8 +11,10 @@ import {
   readNote,
 } from './notes';
 import bodyParser from 'body-parser';
+import { signup } from './users/signup';
 
 const notesRouter = express.Router();
+const usersRouter = express.Router();
 
 notesRouter.get('/', async (_req, res) => {
   res.send(await getAllNotes());
@@ -42,9 +44,15 @@ notesRouter.patch('/:id', async (req, res) => {
   res.send(await updateNote(id, title, body));
 });
 
+usersRouter.post('/signup', async (req, res) => {
+  const { email, pass } = await req.body;
+  res.send(await signup(email, pass));
+});
+
 const apiRouter = express.Router();
 
 apiRouter.use('/notes', notesRouter);
+apiRouter.use('/users', usersRouter);
 
 const app = express();
 app.use(bodyParser.json());

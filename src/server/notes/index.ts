@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { getClient } from '../serverdb';
 
 export type Note = {
   id: string;
@@ -6,14 +6,6 @@ export type Note = {
   title: string;
   body: string;
 };
-
-async function getClient() {
-  const client = new Client({ connectionString: process.env.NOTES_DB_URL });
-
-  await client.connect();
-
-  return client;
-}
 
 export async function getAllNotes(): Promise<Note[]> {
   const client = await getClient();
