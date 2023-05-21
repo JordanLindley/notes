@@ -6,7 +6,7 @@ export type User = {
   email: string;
 };
 
-async function hashPassword(pw: string): Promise<string> {
+export async function hashPassword(pw: string): Promise<string> {
   return new Promise((resolve, reject) =>
     bcrypt.hash(pw, 10, (err, hash) => (err ? reject(err) : resolve(hash)))
   );
