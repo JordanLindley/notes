@@ -6,16 +6,24 @@ import { get } from 'http';
 
 export async function login(email, pass) {
   const client = await getClient();
+  const hashedPass = await hashPassword(pass);
   // look up email in user db, get user record from query
-  const res = client.query<User>(
+  const res = await client.query<User>(
     `SELECT * FROM users WHERE email = $1 RETURNING email`,
     [email]
   );
   // return err if not found or null
+  if (res.rows[0] == null) {
+    return 'email not found';
+  }
 
   // use bcrypt.compare() to check pw give against digest in db
-  // return err if no match
-  // proceed if matches
+  bcrypt.compare(pass, hashedPass, function (err, hash) {
+    //do stuff:
+    // return err if no match
+    // proceed if matches
+  });
+
   // insert a new session record to session table. Create new token, hash that token.
   // library called uuid - use to generate a session token.
   // hash token before issuing. Enter into sessions table for hashed_access_token
