@@ -1,16 +1,20 @@
 import './Note.css';
-import { ChangeEvent, useState, useEffect, useCallback } from 'react';
-import { debounce } from 'debounce';
+import { ChangeEvent, useState, useEffect, useMemo } from 'react';
+import debounce from 'lodash.debounce';
 
 export default function Note(props: {
   note: { id: string; title: string; body: string };
   onSaveNote: (note: { id: string; title: string; body: string }) => void;
 }) {
   const [note, setNote] = useState(props.note);
-  // implement useCallback to stagger network requests here.
-  const saveNote = debounce(() => {
-    props.onSaveNote({ ...note });
-  }, 1000);
+
+  const saveNote = useMemo(
+    () =>
+      debounce(() => {
+        props.onSaveNote({ ...note });
+      }, 500),
+    []
+  );
 
   function setNoteTitle(e: ChangeEvent<HTMLInputElement>) {
     setNote({ ...note, title: e.target.value });
@@ -24,6 +28,10 @@ export default function Note(props: {
 
   useEffect(() => {
     setNote(props.note);
+    // Stop the invocation of the debounced function after unmounting
+    return () => {
+      saveNote.cancel();
+    };
   }, [props.note]);
 
   return (
