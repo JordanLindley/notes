@@ -63,6 +63,8 @@
 
 .note-title {
   grid-row: 1 / 2;
+  display: flex;
+  align-items: center;
 }
 
 .note-body {

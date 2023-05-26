@@ -2,17 +2,30 @@ import './Note.css';
 import { ChangeEvent, useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 
+import SaveIndicator from './SaveIndicator';
+
 export default function Note(props: {
   note: { id: string; title: string; body: string };
-  onSaveNote: (note: { id: string; title: string; body: string }) => void;
+  onSaveNote: (note: {
+    id: string;
+    title: string;
+    body: string;
+  }) => Promise<void>;
 }) {
   const [note, setNote] = useState(props.note);
+  const [saveSucess, setSaveSuccess] = useState(false);
 
   const saveNote = useMemo(
     () =>
-      debounce(() => {
-        props.onSaveNote({ ...note });
-      }, 500),
+      debounce(
+        () =>
+          props
+            .onSaveNote({ ...note })
+            .then(() => setSaveSuccess(true))
+            // TODO: render something to communicate the save failed.
+            .catch(console.error),
+        500
+      ),
     []
   );
 
@@ -39,6 +52,9 @@ export default function Note(props: {
       <div className="note-display">
         <div className="note-title">
           <input type="text" value={note.title} onChange={setNoteTitle}></input>
+          {saveSucess && (
+            <SaveIndicator onComplete={() => setSaveSuccess(false)} />
+          )}
         </div>
         <div className="note-body">
           <textarea value={note.body} onChange={setNoteBody}></textarea>
