@@ -2,6 +2,7 @@ import { getClient } from '../serverdb';
 import { User } from './signup';
 import bcrypt from 'bcrypt';
 import { hashPassword } from './signup';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function login(email, pass) {
   const client = await getClient();
@@ -26,13 +27,14 @@ export async function login(email, pass) {
     } else {
       // return hash.json({success: false, message: `incorrect password!`}); <- returning an error on .json...
     }
-  });
 
-  // insert a new session record to session table. Create new token, hash that token.
-  // library called uuid - use to generate a session token.
-  // hash token before issuing. Enter into sessions table for hashed_access_token
-  // create a new Date() in js for a timeout on session. Reference date 2 weeks from Now as expires_at timestamp, insert into sessions table.
-  // return unhashed access token to user.
-  // token will be hased and compared to sessions table upon each user request
-  // use middleware for ease of use?
+    // insert a new session record to session table. Create new token, hash that token.
+    // uuidv4() -- creates random uuid.
+    // hash token before issuing. Enter into sessions table for hashed_access_token
+    // const hashedToken = hadPassword(token);
+    // create a new Date() in js for a timeout on session. Reference date 2 weeks from Now as expires_at timestamp, insert into sessions table.
+    // return unhashed access token to user.
+    // token will be hashed and compared to sessions table upon each user request
+    // use middleware for ease of use?
+  });
 }
