@@ -2,7 +2,6 @@ import { getClient } from '../serverdb';
 import { User } from './signup';
 import bcrypt from 'bcrypt';
 import { hashPassword } from './signup';
-import { get } from 'http';
 
 export async function login(email, pass) {
   const client = await getClient();
@@ -14,15 +13,19 @@ export async function login(email, pass) {
   );
   // return err if not found or null
   if (res.rows[0] == null) {
-    return 'email not found';
+    return 'email not found!';
   }
-
   // use bcrypt.compare() to check pw give against digest in db
   bcrypt.compare(pass, hashedPass, function (err, hash) {
-    //do stuff:
-    // return err if no match
-    // SQL query like the users, compare with hashedPass?
-    // proceed if matches
+    if (err) {
+      return `incorrect password!`;
+    }
+    if (hash) {
+      // return json stuff??
+      // proceed if matches
+    } else {
+      // return hash.json({success: false, message: `incorrect password!`}); <- returning an error on .json...
+    }
   });
 
   // insert a new session record to session table. Create new token, hash that token.
