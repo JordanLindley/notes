@@ -21,6 +21,7 @@ export async function login(email, pass) {
   bcrypt.compare(pass, hashedPass, function (err, hash) {
     //do stuff:
     // return err if no match
+    // SQL query like the users, compare with hashedPass?
     // proceed if matches
   });
 
