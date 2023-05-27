@@ -18,7 +18,7 @@ export default function Note(props: {
   const saveNote = useMemo(
     () =>
       debounce(
-        () =>
+        (note: typeof props.note) =>
           props
             .onSaveNote({ ...note })
             .then(() => setSaveSuccess(true))
@@ -26,17 +26,19 @@ export default function Note(props: {
             .catch(console.error),
         500
       ),
-    []
+    [props.note]
   );
 
   function setNoteTitle(e: ChangeEvent<HTMLInputElement>) {
-    setNote({ ...note, title: e.target.value });
-    saveNote();
+    const updatedNote = { ...note, title: e.target.value };
+    setNote(updatedNote);
+    saveNote(updatedNote);
   }
 
   function setNoteBody(e: ChangeEvent<HTMLTextAreaElement>) {
-    setNote({ ...note, body: e.target.value });
-    saveNote();
+    const updatedNote = { ...note, body: e.target.value };
+    setNote(updatedNote);
+    saveNote(updatedNote);
   }
 
   useEffect(() => {
