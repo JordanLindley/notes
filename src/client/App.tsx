@@ -38,8 +38,8 @@ function App() {
       });
   }
 
-  function saveNote(note: Note) {
-    fetch(`/api/notes/${note.id}`, {
+  async function saveNote(note: Note) {
+    return fetch(`/api/notes/${note.id}`, {
       method: 'PATCH',
       body: JSON.stringify(note),
       headers: { 'Content-Type': 'application/json' },
@@ -53,9 +53,6 @@ function App() {
             } else return note;
           })
         );
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
