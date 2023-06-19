@@ -11,22 +11,24 @@ export type Session = {
 
 export async function login(email: string, pass: string) {
   const client = await getClient();
-  const digest = await hashPassword(pass);
 
   // look up email in user db, get user record from query
   // return digest from query as well as email and userID.
-  const res = await client.query<User>(
+  const { rows } = await client.query<User & { digest: string }>(
     `SELECT * FROM users WHERE email = $1 RETURNING email, id, digest`,
     [email]
   );
 
+  const [user] = rows;
+
+  // const hashedPass = await hashPassword(pass);
+
   // return err if not found or null
-  if (res.rows[0] == null) {
+  if (!user) {
     return 'email not found!';
   }
-
   // use bcrypt.compare() to check pw given against digest in db
-  if (await bcrypt.compare(pass, digest)) {
+  if (await bcrypt.compare(pass, user.digest)) {
     //returns true or false
     console.log('success!');
     // proceed if matches
@@ -39,8 +41,8 @@ export async function login(email: string, pass: string) {
 
       // Enter into sessions table for hashed_access_token
       const newSession = await client.query<Session>(
-        `INSERT INTO sessions (hashed_access_token, expires_at) VALUES ($1, $2) RETURNING user_id, expires_at`,
-        [hashedToken, timeout] // trouble grabbing user ID here...
+        `INSERT INTO sessions (hashed_access_token, expires_at, user_id) VALUES ($1, $2, $3) RETURNING user_id, expires_at;`,
+        [hashedToken, timeout, user.id]
       );
       // return unhashed access token to user.
 
