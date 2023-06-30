@@ -21,7 +21,7 @@ export async function login(email: string, pass: string) {
 
   const [user] = rows;
 
-  // const hashedPass = await hashPassword(pass);
+  // const hashedPass = await hashPassword(pass); commenting out before deleting -- don't believe it's needed but want to make sure current solution works.
 
   // return err if not found or null
   if (!user) {
@@ -49,7 +49,7 @@ export async function login(email: string, pass: string) {
       // token will be hashed and compared to sessions table upon each user request
     }
   } else {
-    return 'password incorrect';
+    return 'password incorrect!';
   }
   // use middleware for ease of use?
 }
