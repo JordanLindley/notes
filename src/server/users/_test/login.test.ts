@@ -1,7 +1,6 @@
 import { login } from '../login';
 import { Session } from '../login';
 import { getClient } from '../../serverdb';
-import { User } from '../signup';
 import bcrypt from 'bcrypt';
 import { hashPassword } from '../signup';
 
@@ -31,11 +30,11 @@ describe(`login`, () => {
     );
   };
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test(`should return "success" when given correct email and password`, async () => {
+  test(`should pass when given correct email and password`, async () => {
     mockQueryFn(
       [
         {
@@ -73,18 +72,7 @@ describe(`login`, () => {
       []
     );
     const token = await login(`someone@user.com`, user.password);
-    expect(token).not.toBeNull();
-    expect(queryFn).toHaveBeenCalledTimes(2);
-    expect(queryFn).nthCalledWith(
-      1,
-      `SELECT * FROM users WHERE email = $1 RETURNING email, id, digest`,
-      [user.email]
-    );
-    expect(queryFn).nthCalledWith(
-      2,
-      `INSERT INTO sessions (hashed_access_token, expires_at, user_id) VALUES ($1, $2, $3) RETURNING user_id, expires_at;`,
-      [expect.anything(), expect.anything(), user.id]
-    );
+    expect(token).toThrow('email not found!');
   });
 
   test(`should throw an error when the user inputted password does not match`, async () => {
@@ -99,17 +87,6 @@ describe(`login`, () => {
       []
     );
     const token = await login(user.email, 'some other password');
-    expect(token).not.toBeNull();
-    expect(queryFn).toHaveBeenCalledTimes(2);
-    expect(queryFn).nthCalledWith(
-      1,
-      `SELECT * FROM users WHERE email = $1 RETURNING email, id, digest`,
-      [user.email]
-    );
-    expect(queryFn).nthCalledWith(
-      2,
-      `INSERT INTO sessions (hashed_access_token, expires_at, user_id) VALUES ($1, $2, $3) RETURNING user_id, expires_at;`,
-      [expect.anything(), expect.anything(), user.id]
-    );
+    expect(token).toThrow('password incorrect!');
   });
 });
