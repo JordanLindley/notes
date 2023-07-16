@@ -4,7 +4,7 @@ import { getClient } from '../../serverdb';
 import bcrypt from 'bcrypt';
 import { hashPassword } from '../signup';
 
-jest.mock('getClient');
+jest.mock('../../serverdb');
 
 const mockedGetClient = jest.mocked(getClient);
 
@@ -40,7 +40,7 @@ describe(`login`, () => {
         {
           id: user.id,
           email: user.email,
-          digest: hashPassword(user.password),
+          digest: await hashPassword(user.password),
         },
       ],
       [user.id, new Date()]
@@ -61,18 +61,11 @@ describe(`login`, () => {
   });
 
   test(`should throw an error when the user inputted email does not match`, async () => {
-    mockQueryFn(
-      [
-        {
-          id: user.id,
-          email: 'someone@user.com',
-          digest: hashPassword(user.password),
-        },
-      ],
-      []
+    mockQueryFn([], []);
+
+    await expect(login(`someone@user.com`, user.password)).rejects.toThrow(
+      'email not found!'
     );
-    const token = await login(`someone@user.com`, user.password);
-    expect(token).toThrow('email not found!');
   });
 
   test(`should throw an error when the user inputted password does not match`, async () => {
@@ -81,12 +74,13 @@ describe(`login`, () => {
         {
           id: user.id,
           email: user.email,
-          digest: hashPassword('some other password'),
+          digest: await hashPassword('1234'),
         },
       ],
       []
     );
-    const token = await login(user.email, 'some other password');
-    expect(token).toThrow('password incorrect!');
+    await expect(login(user.email, 'some other password')).rejects.toThrow(
+      'password incorrect!'
+    );
   });
 });
