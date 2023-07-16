@@ -47,12 +47,16 @@ notesRouter.patch('/:id', async (req, res) => {
 
 usersRouter.post('/signup', async (req, res) => {
   const { email, pass } = await req.body;
-  res.send(await signup(email, pass));
+  const user = await signup(email, pass);
+  res.cookie('accessToken', user.accessToken);
+  res.send(user);
 });
 
 usersRouter.post('/login', async (req, res) => {
   const { email, pass } = await req.body;
-  res.send(await login(email, pass));
+  const user = await login(email, pass);
+  res.cookie('accessToken', user.accessToken);
+  res.send(user);
 });
 
 const apiRouter = express.Router();

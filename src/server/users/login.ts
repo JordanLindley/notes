@@ -35,8 +35,8 @@ export async function login(email: string, pass: string) {
 }
 
 export async function createSession(client: Client, user: User) {
-  const token = uuidv4();
-  const hashedToken = hashPassword(token);
+  const accessToken = uuidv4();
+  const hashedToken = hashPassword(accessToken);
   // create a new Date() in js for a timeout on session. Reference date 2 weeks from Now
   const timeout = new Date(Date.now() + 12096e5);
 
@@ -47,5 +47,5 @@ export async function createSession(client: Client, user: User) {
   );
   // return unhashed access token to user.
   // token will be hashed and compared to sessions table upon each user request
-  return { token };
+  return { accessToken };
 }

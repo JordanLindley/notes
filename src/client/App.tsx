@@ -15,6 +15,11 @@ export type Note = {
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNote, setSelectedNote] = useState<null | Note>(null);
+  // grab access code for cookie if it exists
+  const cookie = document.cookie
+    .split(';')
+    .find((e) => e.split('=')[0] === 'accessToken')
+    ?.split('=')[1];
 
   useEffect(() => {
     fetch('/api/notes')
@@ -70,22 +75,23 @@ function App() {
       });
   }
 
-  return (
-    // <div className="App">
-    //   <div id="ui">
-    //     <NoteBook
-    //       notes={notes}
-    //       onSelectNote={selectNote}
-    //       onCreateNote={createNote}
-    //     />
-    //     {selectedNote ? (
-    //       <div className="display-container">
-    //         <Note note={selectedNote} onSaveNote={saveNote} />
-    //         <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
-    //       </div>
-    //     ) : null}
-    //   </div>
-    // </div>
+  return cookie ? (
+    <div className="App">
+      <div id="ui">
+        <NoteBook
+          notes={notes}
+          onSelectNote={selectNote}
+          onCreateNote={createNote}
+        />
+        {selectedNote ? (
+          <div className="display-container">
+            <Note note={selectedNote} onSaveNote={saveNote} />
+            <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  ) : (
     <LoginSignup></LoginSignup>
   );
 }

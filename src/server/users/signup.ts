@@ -24,9 +24,9 @@ export async function signup(email: string, userPass: string) {
 
   const user = res.rows[0];
 
-  const { token } = await createSession(client, user);
+  const { accessToken } = await createSession(client, user);
 
   await client.end();
 
-  return { ...user, accessToken: token };
+  return { ...user, accessToken };
 }
