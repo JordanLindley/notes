@@ -1,5 +1,6 @@
 import { getClient } from '../serverdb';
 import bcrypt from 'bcrypt';
+import { createSession } from './login';
 
 export type User = {
   id: string;
@@ -21,7 +22,11 @@ export async function signup(email: string, userPass: string) {
     [email, digest]
   );
 
+  const user = res.rows[0];
+
+  const { token } = await createSession(client, user);
+
   await client.end();
 
-  return res.rows[0];
+  return { ...user, accessToken: token };
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import NoteBook from './components/NoteBook';
 import Note from './components/Note';
 import Delete from './components/Delete';
+import LoginSignup from './components/Login-Signup';
 
 export type Note = {
   id: string;
@@ -70,21 +71,22 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div id="ui">
-        <NoteBook
-          notes={notes}
-          onSelectNote={selectNote}
-          onCreateNote={createNote}
-        />
-        {selectedNote ? (
-          <div className="display-container">
-            <Note note={selectedNote} onSaveNote={saveNote} />
-            <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
-          </div>
-        ) : null}
-      </div>
-    </div>
+    // <div className="App">
+    //   <div id="ui">
+    //     <NoteBook
+    //       notes={notes}
+    //       onSelectNote={selectNote}
+    //       onCreateNote={createNote}
+    //     />
+    //     {selectedNote ? (
+    //       <div className="display-container">
+    //         <Note note={selectedNote} onSaveNote={saveNote} />
+    //         <Delete noteId={selectedNote.id} onDeleteNote={deleteNote}></Delete>
+    //       </div>
+    //     ) : null}
+    //   </div>
+    // </div>
+    <LoginSignup></LoginSignup>
   );
 }
 
