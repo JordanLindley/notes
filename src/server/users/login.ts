@@ -11,7 +11,6 @@ export type Session = {
 };
 
 export async function login(email: string, pass: string) {
-  console.log(email, pass);
   const client = await getClient();
 
   // look up email in user db, get user record from query
@@ -28,8 +27,11 @@ export async function login(email: string, pass: string) {
   }
   // use bcrypt.compare() to check pw given against digest in db
   if (await bcrypt.compare(pass, user.digest)) {
-    return createSession(client, user);
+    const { accessToken } = await createSession(client, user);
+    await client.end();
+    return accessToken;
   } else {
+    await client.end();
     throw new Error('password incorrect!');
   }
 }

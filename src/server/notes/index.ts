@@ -33,12 +33,8 @@ export async function createNote(title?: string, body?: string): Promise<Note> {
 export async function deleteNote(id: string): Promise<void> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`DELETE FROM notes WHERE id = $1;`, [
-    id,
-  ]);
+  await client.query<Note>(`DELETE FROM notes WHERE id = $1;`, [id]);
   await client.end();
-
-  console.log('Gone!');
 }
 
 export async function updateNote(
