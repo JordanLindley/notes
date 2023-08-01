@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import NoteBook from './components/NoteBook';
 import Note from './components/Note';
 import Delete from './components/Delete';
+import LoginSignup from './components/Login-Signup';
 
 export type Note = {
   id: string;
@@ -14,6 +15,11 @@ export type Note = {
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNote, setSelectedNote] = useState<null | Note>(null);
+  // grab access code for cookie if it exists
+  const cookie = document.cookie
+    .split(';')
+    .find((e) => e.split('=')[0] === 'accessToken')
+    ?.split('=')[1];
 
   useEffect(() => {
     fetch('/api/notes')
@@ -69,7 +75,7 @@ function App() {
       });
   }
 
-  return (
+  return cookie ? (
     <div className="App">
       <div id="ui">
         <NoteBook
@@ -85,6 +91,8 @@ function App() {
         ) : null}
       </div>
     </div>
+  ) : (
+    <LoginSignup></LoginSignup>
   );
 }
 

@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { getClient } from '../serverdb';
 
 export type Note = {
   id: string;
@@ -6,14 +6,6 @@ export type Note = {
   title: string;
   body: string;
 };
-
-async function getClient() {
-  const client = new Client({ connectionString: process.env.NOTES_DB_URL });
-
-  await client.connect();
-
-  return client;
-}
 
 export async function getAllNotes(): Promise<Note[]> {
   const client = await getClient();
@@ -41,12 +33,8 @@ export async function createNote(title?: string, body?: string): Promise<Note> {
 export async function deleteNote(id: string): Promise<void> {
   const client = await getClient();
 
-  const res = await client.query<Note>(`DELETE FROM notes WHERE id = $1;`, [
-    id,
-  ]);
+  await client.query<Note>(`DELETE FROM notes WHERE id = $1;`, [id]);
   await client.end();
-
-  console.log('Gone!');
 }
 
 export async function updateNote(
