@@ -29,7 +29,7 @@ export async function login(email: string, pass: string) {
   if (await bcrypt.compare(pass, user.digest)) {
     const { accessToken } = await createSession(client, user);
     await client.end();
-    return accessToken;
+    return { accessToken };
   } else {
     await client.end();
     throw new Error('password incorrect!');
